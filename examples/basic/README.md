@@ -15,3 +15,11 @@ To clean up resources:
 ```bash
 terraform destroy
 ```
+
+## Cost
+
+This example will create the following resources:
+- Route Table (Free)
+- Route Table Attachment (Free)
+
+Note: While route tables and attachments are free, associated resources like VPCs and VSwitches may incur costs.

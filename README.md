@@ -2,9 +2,7 @@
 
 English | [简体中文](https://github.com/alibabacloud-automation/terraform-alicloud-route-table/blob/main/README-CN.md)
 
-Terraform module which creates [Route Table](https://www.alibabacloud.com/help/en/vpc/user-guide/route-tables) on Alibaba Cloud.
-
-This module supports creating a custom route table in a specified VPC, managing route entries, and associating the route table with VSwitches.
+Terraform module which creates Route Table on Alibaba Cloud. This module supports creating a custom route table in a specified VPC, managing route entries, and associating the route table with VSwitches.
 
 ## Usage
 
@@ -14,16 +12,14 @@ Create a route table with route entries and VSwitch associations.
 module "route_table" {
   source = "alibabacloud-automation/route-table/alicloud"
 
-  name   = "my-route-table"
-  vpc_id = "vpc-xxxxx"
+  route_table_name = "my-route-table"
+  vpc_id           = "vpc-xxxxx"
 
   route_entries = {
     nat_route = {
       destination_cidrblock = "0.0.0.0/0"
       nexthop_type          = "NatGateway"
       nexthop_id            = "ngw-xxxxx"
-      name                  = "default-nat-route"
-      description           = "Default route to NAT Gateway"
     }
   }
 
@@ -44,13 +40,13 @@ module "route_table" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_alicloud"></a> [alicloud](#requirement\_alicloud) | >= 1.0 |
+| <a name="requirement_alicloud"></a> [alicloud](#requirement\_alicloud) | >= v1.194.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | 1.272.1 |
+| <a name="provider_alicloud"></a> [alicloud](#provider\_alicloud) | >= v1.194.0 |
 
 ## Modules
 
@@ -60,9 +56,9 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [alicloud_route_entry.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/route_entry) | resource |
-| [alicloud_route_table.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/route_table) | resource |
-| [alicloud_route_table_attachment.this](https://registry.terraform.io/providers/hashicorp/alicloud/latest/docs/resources/route_table_attachment) | resource |
+| [alicloud_route_entry.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/route_entry) | resource |
+| [alicloud_route_table.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/route_table) | resource |
+| [alicloud_route_table_attachment.this](https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/route_table_attachment) | resource |
 
 ## Inputs
 
@@ -70,7 +66,6 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_associate_type"></a> [associate\_type](#input\_associate\_type) | The type of cloud resource that is bindable to the route table. Valid values: `VSwitch`, `Gateway`. | `string` | `"VSwitch"` | no |
 | <a name="input_description"></a> [description](#input\_description) | The description of the route table. | `string` | `null` | no |
-| <a name="input_name"></a> [name](#input\_name) | The name of the route table. | `string` | n/a | yes |
 | <a name="input_route_entries"></a> [route\_entries](#input\_route\_entries) | A map of route entries to create in the route table. Each entry includes destination CIDR block, next hop type, and optional next hop ID, name, and description. | <pre>map(object({<br/>    destination_cidrblock = string<br/>    nexthop_type          = string<br/>    nexthop_id            = optional(string)<br/>    name                  = optional(string)<br/>    description           = optional(string)<br/>  }))</pre> | `{}` | no |
 | <a name="input_route_propagation_enable"></a> [route\_propagation\_enable](#input\_route\_propagation\_enable) | Whether to enable route propagation for the route table. | `bool` | `null` | no |
 | <a name="input_route_table_name"></a> [route\_table\_name](#input\_route\_table\_name) | The display name of the route table. If not specified, the value of `name` will be used. | `string` | `null` | no |
